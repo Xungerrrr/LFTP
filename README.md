@@ -81,6 +81,8 @@ python server.py
 python client.py
 ```
 
+服务端的文件路径在./server/下，客户端的文件路径在./client/下，传输的文件需要先放在对应的目录下。
+
 ## 应用设计
 
 ### 自定义数据包的设计
