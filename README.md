@@ -138,38 +138,71 @@ python client.py
 
 ### 启动客户端和服务端
 
-![1](./Screenshots/1.png)
-![15](./Screenshots/15.png)
+* 客户端
+
+	![1](./Screenshots/1.png)
+
+* 服务端
+
+	![15](./Screenshots/15.png)
 
 ### 单个客户端上传
 
-![2](./Screenshots/2.png)
-![3](./Screenshots/3.png)
+* 客户端
+
+	![2](./Screenshots/2.png)
+
+* 服务端
+
+	![3](./Screenshots/3.png)
 
 ### 单个客户端下载
 
-![4](./Screenshots/4.png)
-![5](./Screenshots/5.png)
+* 客户端
+
+	![4](./Screenshots/4.png)
+
+* 服务端
+
+	![5](./Screenshots/5.png)
 
 ### 多个客户端同时上传
 
-![6](./Screenshots/6.png)
-![7](./Screenshots/7.png)
-![8](./Screenshots/8.png)
+* 客户端
+
+	![6](./Screenshots/6.png)
+
+	![7](./Screenshots/7.png)
+
+* 服务端
+
+	![8](./Screenshots/8.png)
 
 ### 多个客户端同时下载
 
-![9](./Screenshots/9.png)
-![10](./Screenshots/10.png)
-![11](./Screenshots/11.png)
+* 客户端
+
+	![9](./Screenshots/9.png)
+
+	![10](./Screenshots/10.png)
+
+* 服务端
+
+	![11](./Screenshots/11.png)
 
 ### 多个客户端同时上传或下载
 
-![12](./Screenshots/12.png)
-![13](./Screenshots/13.png)
-![14](./Screenshots/14.png)
+* 客户端
+
+	![12](./Screenshots/12.png)
+
+	![13](./Screenshots/13.png)
+
+* 服务端
+
+	![14](./Screenshots/14.png)
 
 ### 可靠传输、流控制、阻塞控制
-当发生丢包、超时、重传等事件时，程序会显示debug信息。
+当发生丢包、超时、重传等事件时，程序会显示相应信息。以下是发送端在收到重复的ACK和超时的时候显示的信息：
 
 ![16](./Screenshots/16.png)
