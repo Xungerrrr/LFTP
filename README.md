@@ -122,7 +122,7 @@ python client.py
 
 ### 启动客户端和服务端
 
-![1](/.Screenshots/1.png)
+![1](./Screenshots/1.png)
 ![15](/.Screenshots/15.png)
 
 ### 单个客户端上传
