@@ -101,7 +101,7 @@ python client.py
 
 可靠文件传输的机制与TCP的相同，示意图如下：
 
-![tcp](/.Screenshots/tcp.png)
+![tcp](./Screenshots/tcp.png)
 
 
 ### 流控制
