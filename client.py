@@ -7,7 +7,6 @@ from sender import Sender
 from receiver import Receiver
 
 serverPort = 12000
-rwnd = 10
 
 print("**********************************************")
 print("Welcome to the LFTP client application")
@@ -15,20 +14,19 @@ print("Usage:\n\tSend file: LFTP lsend <myserver> <mylargefile>\n\tGet file: LFT
 print("Enter exit() to exit.")
 print("**********************************************")
 
-
+# 与服务端建立连接的函数
 def connect():
-    global rwnd, dataAddress
+    global dataAddress
     try:
         sendBase = 0
         cwnd = 1
-        syn = Packet.encode(Packet(0, 0, 0, 1, 0, action, rwnd, fileName.encode('utf-8')))
+        syn = Packet.encode(Packet(0, 0, 0, 1, 0, action, 0, fileName.encode('utf-8')))
         clientSocket.sendto(syn, serverAddress)
         clientSocket.settimeout(5)
 
         data, serverAddrress = clientSocket.recvfrom(2048)
         packet = Packet.decode(data)
         if packet.ACK and packet.SYN and packet.ackNum == 1:
-            rwnd = packet.rwnd
             port = packet.data
             if port == '-1':
                 print('No port available.')
@@ -73,13 +71,13 @@ while True:
     clientSocket = socket(AF_INET, SOCK_DGRAM)
 
     
-    if action == 0:     # 发送文件
+    if action == 0:     # 上传文件
         print("Connecting to server...")
         if not connect():
             continue
         else:
             sender = Sender(clientSocket, dataAddress, fileName, 'client/')
-            threading.Thread(target=sender.send()).start()
+            threading.Thread(target=sender.send()).start() # 新建线程进行传输
     
     elif action == 1:   # 下载文件
         print("Connecting to server...")
@@ -87,4 +85,4 @@ while True:
             continue
         else:
             receiver = Receiver(clientSocket, dataAddress, fileName, 'client/')
-            threading.Thread(target=receiver.receive()).start()
+            threading.Thread(target=receiver.receive()).start() # 新建线程进行传输
