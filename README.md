@@ -85,23 +85,23 @@ python client.py
 
 ### 自定义数据包的设计
 
-参考TCP的数据包，设计了LFTP的数据包格式，如下图。相关代码：packet.py。
-
-[图]
+参考TCP的数据包，设计了LFTP的数据包格式，Header保留了seqNum、ackNum、ACK、SYN、FIN和rwnd，增加了一个字段action，用于表示客户端的动作（上传或下载）。相关代码：packet.py。、
 
 ### 可靠文件传输
 
 在UDP的传输基础上，参考TCP的设计，实现了可靠文件传输。
 
-[图]
-
 * 发送端
 	客户端或服务端发送文件时，每次从文件中读取一定量的数据，并使用自定义的Packet类封装数据包，其中包含了当前数据包的序号（Sequence Number)和数据（Data)，然后发送数据包，将数据包存入缓存队列中，并更新下一个数据包的序号（Next Sequence Number）。若此时缓存队列只有1个数据包，说明计时器没有开启，则新建一个线程用于接收ACK，设置当前序号为Send Base，并且在线程中开启定时器。
 
-	当收到接收端传来的ACK数据包时，判断ACK序号与当前Send Base的关系。若ACK序号大于当前Send Base，则说明Send Base到ACK序号之间的数据包都被成功接收，将这些数据包从缓存队列中移走。若ACK序号等于当前Send Base，说明出现了丢包。
+	当收到接收端传来的ACK数据包时，判断ACK序号与当前SendBase的关系。若ACK序号大于当前SendBase，则说明SendBase到ACK序号之间的数据包都被成功接收，将这些数据包从缓存队列中移走。若ACK序号等于当前SendBase，说明出现了丢包，收到三个重复的ACK则重传序号为SendBase的数据包。若超时，则重传序号为SendBase的数据包。
 
 * 接收端
 	接收端会记录一个期望接收到的序号。若收到大于该序号的数据包，则将其存入缓冲队列，同时发送ACK，ACK序号为还没收到的期望序号。若收到等于该序号的数据包，则ACK下一个尚未收到的数据包，同时将前面已经收到的乱序数据包按顺序写入到文件中。
+
+可靠文件传输的机制与TCP的相同，示意图如下：
+
+！[tcp](/.Screenshots/tcp.png)
 
 
 ### 流控制
@@ -119,21 +119,35 @@ python client.py
 客户端请求传输文件时，服务端会寻找可用的端口。若存在可用端口，则将端口反馈回客户端，并使用端口绑定新的Socket，然后创建新的线程负责该用户的文件传输任务。若没有可用端口，则反馈响应的信息。
 
 ## 应用测试
+
+### 启动客户端
+
+！[1](/.Screenshots/1.png)
+
 ### 单个客户端上传
 
-![2](./Screenshots/1.png)
-![3](./Screenshots/2.png)
+![2](./Screenshots/2.png)
+![3](./Screenshots/3.png)
 
 ### 单个客户端下载
 
+![4](./Screenshots/4.png)
+![5](./Screenshots/5.png)
+
 ### 多个客户端同时上传
+
+![6](./Screenshots/6.png)
+![7](./Screenshots/7.png)
+![8](./Screenshots/8.png)
 
 ### 多个客户端同时下载
 
+![9](./Screenshots/9.png)
+![10](./Screenshots/10.png)
+![11](./Screenshots/11.png)
+
 ### 多个客户端同时上传或下载
 
-### 可靠传输
-
-### 流控制
-
-### 拥塞控制
+![12](./Screenshots/12.png)
+![13](./Screenshots/13.png)
+![14](./Screenshots/14.png)
