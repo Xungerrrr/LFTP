@@ -48,6 +48,7 @@ class Sender:
                         if len(self.sendBuffer) == 1:
                             threading.Thread(target=self.receiveAck).start() # 启动接收ACK的线程
                         self.sendSocket.sendto(packet, self.clientAddress)
+                        #print('Sending SEQ = %s', % self.nextSeqNum)
                         self.nextSeqNum += 1
             print('Send %s to %s successfully!' % (self.fileName, self.clientAddress))
             self.sendSocket.close()
@@ -64,8 +65,10 @@ class Sender:
                 self.sendSocket.settimeout(None)
                 packet = Packet.decode(data)
                 if packet.ACK: # 如果是ACK
+                    #print('Receive ACK = %s' % packet.ackNum)
                     self.currentAck = packet.ackNum
                     self.rwnd = packet.rwnd # 流控制
+                    #print('rwnd: %s' % self.rwnd)
                     if packet.ackNum == self.sendBase:
                         duplicateNum += 1
                         if duplicateNum == 3: # 收到3次重复的ACK
@@ -88,11 +91,13 @@ class Sender:
                         duplicateNum = 0
                         # 阻塞控制
                         if self.congestionState == Sender.SS:
+                            #print('Congestion State: SS, cwnd: %s' % self.cwnd)
                             self.cwnd += 1
                             self.swnd = min(self.rwnd, self.cwnd)
                             if (self.cwnd > self.ssthresh):
                                 self.congestionState = Sender.CA
                         elif self.congestionState == Sender.CA:
+                            #print('Congestion State: SS, cwnd: %s' % self.cwnd)
                             self.cwnd += (1 / self.cwnd)
                             self.swnd = min(self.rwnd, self.cwnd)
                     if len(self.sendBuffer) == 0: # 所有发送的数据包已收到ACK
