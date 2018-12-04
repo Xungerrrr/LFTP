@@ -46,25 +46,25 @@ A network application to support large file transfer between two computers in th
 	* 提供拥塞控制
 
 ## 文件说明
-	* client.py
+* client.py
 
-		客户端程序
+	客户端程序
 
-	* server.py
+* server.py
 
-		服务端程序
+	服务端程序
 
-	* sender.py
+* sender.py
 
-		包含实现文件发送的类
+	包含实现文件发送的类
 
-	* receiver.py
+* receiver.py
 
-		包含实现文件接收的类
+	包含实现文件接收的类
 
-	* packet.py
+* packet.py
 
-		包含自定义packet的类
+	包含自定义packet的类
 
 ## 启动方法（Windows）
 运行该应用前，需要安装Python 3.x版本，并配置好Python的系统环境变量。
@@ -101,7 +101,7 @@ python client.py
 
 可靠文件传输的机制与TCP的相同，示意图如下：
 
-！[tcp](/.Screenshots/tcp.png)
+![tcp](/.Screenshots/tcp.png)
 
 
 ### 流控制
@@ -120,9 +120,10 @@ python client.py
 
 ## 应用测试
 
-### 启动客户端
+### 启动客户端和服务端
 
-！[1](/.Screenshots/1.png)
+![1](/.Screenshots/1.png)
+![15](/.Screenshots/15.png)
 
 ### 单个客户端上传
 
