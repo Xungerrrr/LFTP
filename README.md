@@ -69,7 +69,7 @@ A network application to support large file transfer between two computers in th
 ## 启动方法（Windows）
 运行该应用前，需要安装Python 3.x版本，并配置好Python的系统环境变量。
 
-启动服务端：
+启动服务端（启动前要先将server.py内的serverName改为实际的IP地址）：
 
 ```
 python server.py
